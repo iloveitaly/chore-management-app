@@ -1,0 +1,28 @@
+<ion-view hide-nav-bar="true">
+  <ion-content scroll="false" class='padding blue-background'>
+    <div style="margin-bottom: 30%">
+      <a ui-sref="login" class='ion-close-round' style="font-size: 23px; color: white"></a>
+    </div>
+
+    <div class='login-form'>
+      <button class='button button-block' ng-click="googleSignIn()"><span style="color: #cd231c">Login with Google Account</span></button>
+
+      <p class='text-center left-and-right-lines' style="margin: 30px; color: white; font-size: 20px;"><span>or</span></p>
+
+      <form ng-submit="signinWithEmail()">
+        <label class="item item-input" >
+          <input type="text" ng-model="registration.email" placeholder="Email" />
+        </label>
+
+        <label class="item item-input" style="margin-bottom: 15px;">
+          <input type="password" ng-model="registration.password" placeholder="Password" />
+        </label>
+
+        <button class='button button-block'>Login</button>
+
+        <p class='text-center' style="margin-top: 20px"><a style="color: white; text-decoration: none" href="mailto:support@currency.family">Forgot your password?</a></p>
+      </form>
+    </div>
+
+  </ion-content>
+</ion-view>

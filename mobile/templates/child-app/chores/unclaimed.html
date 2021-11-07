@@ -1,0 +1,46 @@
+<ion-view>
+  <ion-nav-title>Your Jobs</ion-nav-title>
+
+    <ion-content padding="false" class="has-header has-footer">
+      <ion-refresher
+        pulling-text="Pull to refresh"
+        on-refresh="doRefresh()">
+      </ion-refresher>
+      
+        <ion-list>
+          <ion-item class='item-button-right' ng-repeat="chore in chores">
+            <div ui-sref="childMenu.childShowChore({ childId: child.id, id: chore.id })">
+              <div style="margin-bottom: 5px">{{ chore.name }}</div>
+              <p>{{ chore.description }}</p>
+            </div>
+
+            <button ng-click="claimChore(chore)" class="button button-positive">
+              Claim
+            </button>
+          </ion-item>
+        </ion-list>
+
+        <div ng-show="chores.length == 0" class='text-center ng-hide' style="margin-top: 30%">
+          <h4>No Jobs to Claim!</h4>
+          <p class='text-muted'>Ask your parents to add some jobs!</p>
+        </div>
+    </ion-content>
+
+    <ion-tabs class="tabs-stable tabs-icon-top">
+      <ion-tab
+        title="Jobs"
+        ui-sref="childMenu.childChoresList({ childId: childId })"
+        icon-on="ion-ios-filing"
+        icon-off="ion-ios-filing-outline">
+        <!-- Tab 1 content -->
+      </ion-tab>
+
+      <ion-tab
+        title="Unclaimed"
+        ui-sref="childMenu.childEnclaimedChoresList({ childId: childId })"
+        icon-on="ion-cash"
+        icon-off="ion-cash">
+        <!-- Tab 2 content -->
+      </ion-tab>
+    </ion-tabs>
+</ion-view>

@@ -1,0 +1,67 @@
+<ion-view title="Add Transaction">
+    <ion-content scroll="true" class="has-header padding">
+
+      <p>Record money earned (income) and purchases made. These will be added to the account.
+
+      <br/>
+      <div class="button-bar">
+        <a class="button" ng-class="{'button-positive' : type == 'income'}" ng-click="setType('income')">Income</a>
+        <a class="button" ng-class="{'button-positive' : type == 'expense'}" ng-click="setType('expense')">Expense</a>
+        <a class="button" ng-class="{'button-positive' : type == 'transfer'}" ng-click="setType('transfer')">Transfer</a>
+      </div>
+      <br/>
+
+        <form class="list" ng-submit="addTransaction()">
+          <label ng-show="type == 'transfer'" class="item item-input item-select ng-hide">
+            <div class="input-label">
+              To Account
+            </div>
+
+            <select
+              ng-model="transaction.destination_account"
+              ng-options="account.id as account.name for account in otherAccounts">
+            </select>
+          </label>
+
+          <label class="item item-input item-stacked-label">
+              <span class="input-label" ng-show="type == 'income'">How much was earned?</span>
+              <span class="input-label" ng-show="type == 'expense'">How much was spent?</span>
+              <span class="input-label" ng-show="type == 'transfer'">How much is being transferred?</span>
+              <input type="text" placeholder="Example: 10.50" ng-model="transaction.amount">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label" ng-show="type == 'income'">What was done?</span>
+            <span class="input-label" ng-show="type == 'expense'">What was purchased?</span>
+            <span class="input-label" ng-show="type == 'transfer'">Reason for this transfer?</span>
+            <input type="text" placeholder="Example: {{ type == 'expense' ? 'New legos' : 'Mowed the lawn' }}" ng-model="transaction.description">
+          </label>
+
+          <label class="item item-input item-stacked-label" ng-show="type != 'transfer'">
+            <span class="input-label" ng-show="type == 'expense'">Who's being paid?</span>
+            <input type="text" placeholder="Example: Toys R' Us" ng-show="type == 'expense'" ng-model="transaction.payee">
+
+            <span class="input-label" ng-show="type == 'income'">Who's paying?</span>
+            <input type="text" ng-show="type == 'income'" ng-model="transaction.payor">
+          </label>
+
+          <ion-toggle
+            ng-if="account.split_income"
+            ng-model="transaction.split_income"
+            toggle-class="">Split</ion-toggle>
+
+          <!--  TODO eliminate padding -->
+
+          <!-- TODO <p class='text-center'>Tips and tricks for managing family allowances!</p> -->
+
+          <div class="row">
+            <div class='col'>
+              <button class="button button-balanced button-block">Submit</button>
+            </div>
+            <div class='col'>
+              <button class="button button-positive button-block" ui-sref="menu.childrenAccount({ childId: child.id })">Cancel</button>
+            </div>
+          </div>
+        </form>
+    </ion-content>
+</ion-view>

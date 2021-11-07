@@ -1,0 +1,5 @@
+// https://github.com/rollbar/rollbar-gem/blob/2c7807754a2ce9e38c2be09ed8af20f1f9da28fb/lib/rollbar/js/frameworks/rails.rb
+// https://github.com/rollbar/rollbar-gem/blob/d06b18d2a98d8effdde605355ebe14add7ae5d3d/lib/rollbar/js/middleware.rb#L107-L109
+
+var _rollbarConfig = <%= Rollbar.configuration.js_options.to_json %>;
+<%= Rollbar::Middleware::Js::SNIPPET %>

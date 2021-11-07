@@ -1,0 +1,29 @@
+<ion-view>
+    <ion-nav-title>Setup your Jobs</ion-nav-title>
+    <ion-content scroll="true" class="has-header padding">
+        <form ng-submit="setupJobs()">
+
+          <span class="input-label" style="width:100% !important">Who are your children?</span>
+          <p>Next, we'll setup accounts and starting balance for each child.
+          You can always edit and add more later!</p>
+
+          <div class="list">
+            <label class="item item-input" ng-repeat="child in children">
+              <!-- <div class="input-label item-stacked-label">
+                  Name
+              </div> -->
+
+              <!--  TODO randomize the name of the savings accounts -->
+              <input
+                type="text"
+                placeholder="Your {{ $index + 1 | ordinal }} Child"
+                ng-model="child.name">
+            </label>
+          </div>
+
+          <p style="margin-bottom: 25px;"><a href="#" ng-click="addChild()">Add another child</a></p>
+
+            <button class="button button-balanced button-block ">Next</button>
+        </form>
+    </ion-content>
+</ion-view>

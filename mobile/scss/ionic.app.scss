@@ -1,0 +1,133 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../fonts" !default;
+
+// Include all of Ionic
+@import "mobile/lib/ionic/scss/ionic";
+
+@import "mobile/scss/login";
+
+.text-center {
+  text-align: center;
+}
+
+.onboard-slides {
+  i.fa {
+    color: white;
+    font-size: 90px;
+    margin-top: 25px;
+  }
+
+  h1 {
+    color: white;
+    font-size: 35px;
+  }
+
+  p {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  button {
+    margin-top: 25px;
+  }
+
+  .button-light {
+    background-color: transparent;
+    color: white;
+    font-weight: 500;
+    border: 2px solid white;
+  }
+}
+
+// framework fixes
+
+.item-text-wrap.item-stacked-label .input-label {
+  max-width: 100%;
+  width: 100%;
+}
+
+// force right menu to show when hide buttons during ionic back button history feature is enabled
+button[menu-toggle='right'].hide {
+  display: block !important;
+}
+
+// left and right lines
+
+.left-and-right-lines {
+  line-height: 1;
+  text-align: center;
+  overflow:hidden;
+}
+.left-and-right-lines span {
+  display: inline-block;
+  position: relative;
+}
+.left-and-right-lines span:before,
+.left-and-right-lines span:after {
+  content: "";
+  position: absolute;
+  border-top: 1px solid white;
+  top: 10px;
+  width: 500px;
+}
+.left-and-right-lines span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+.left-and-right-lines span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+// login form
+
+.blue-background {
+  background-image: radial-gradient(circle farthest-side at right bottom, #4DC2F8, #24A9F0 80%, #1498e6);
+}
+
+.login-form {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.login-form label {
+  margin-top: 15px;
+  padding: 7px 15px;
+  border-radius: 7px;
+}
+
+// family dashboard
+
+.dashboard-icon-section {
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  margin: 15px;
+  padding: 15px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dashboard-icon-section .fa {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 15px;
+  color: #888d94;
+}

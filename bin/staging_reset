@@ -1,0 +1,5 @@
+#!/bin/bash
+
+heroku pg:reset DATABASE_URL --app staging-family-currency --confirm staging-family-currency
+heroku run rake db:migrate --app staging-family-currency
+heroku run rake currency:bootstrap --app staging-family-currency

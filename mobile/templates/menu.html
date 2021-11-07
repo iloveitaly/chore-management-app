@@ -1,0 +1,32 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button></ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menu"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+      <ion-header-bar class="bar-stable">
+        <div class="title">Children</div>
+      </ion-header-bar>
+      <ion-content padding="false" class="side-menu-left has-header">
+          <ion-list>
+            <ion-item ui-sref="menu.showChild({ childId: child.id })" ng-repeat="child in children" menu-close>
+              {{ child.name }}
+            </ion-item>
+
+            <!-- TODO link to onboarding flow if no children exist -->
+
+            <p>&nbsp;</p>
+            <ion-item ui-sref="menu.familyDashboard" menu-close="">Family Dashboard</ion-item>
+            <ion-item ui-sref="login" menu-close="" ng-click="signOut()">Logout</ion-item>
+          </ion-list>
+      </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>

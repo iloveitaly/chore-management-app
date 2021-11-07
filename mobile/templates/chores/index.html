@@ -1,0 +1,51 @@
+<ion-view>
+  <!-- TODO use filter to generate family name  -->
+  <ion-nav-title>{{ family.name }} Family Jobs</ion-nav-title>
+
+    <ion-content padding="false" class="has-header has-footer">
+      <ion-refresher
+        pulling-text="Pull to refresh"
+        on-refresh="doRefresh()">
+      </ion-refresher>
+
+        <ion-list>
+          <ion-item class='item-button-right' ng-repeat="chore in chores">
+            <div ui-sref="menu.editChore({ choreId: chore.id })">
+              <div style="margin-bottom: 5px">{{ chore.name }}</div>
+              <!-- <p>{{ chore.description }}</p> -->
+
+              <p ng-if="chore.status == 'open'">
+                <span ng-if="chore.child_id">Assigned: {{ chore.child_name }}</span>
+                <span ng-if="!chore.child_id">Not Assigned</span>
+              </p>
+              <p ng-if="chore.status == 'completed'"><span class='assertive'>Marked as completed by {{ chore.child_name }}</span></p>
+
+              <p ng-if="chore.paid_on">Last Paid: {{ chore.paid_on | date:'short' }}</p>
+
+              <!-- TODO jobs in this list are always not completed  -->
+              <p ng-if="!chore.paid_on && chore.status != 'completed'">Never completed{{ chore.recurring ? '. Recurring.' : ''}}</p>
+
+              <!-- <p>{{ chore.due_date }}</p> -->
+            </div>
+
+            <a
+              ui-sref="menu.payChore({ choreId: chore.id })"
+              class="button button-positive">
+              Pay
+            </a>
+          </ion-item>
+        </ion-list>
+
+        <div
+          ng-show="chores.length == 0"
+          class='text-center ng-hide'
+          style="margin-top: 30%">
+          <h4>No Jobs</h4>
+          <p class='text-muted'>Add jobs and easily pay your children</p>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar class="bar-balanced" ui-sref="menu.addChore">
+      <p class="title">Add Job<p>
+    </ion-footer-bar>
+</ion-view>

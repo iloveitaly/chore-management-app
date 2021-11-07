@@ -1,0 +1,11 @@
+<label class="item item-input item-select">
+    <div class="input-label">
+        Currency
+    </div>
+    <select ng-model="account.currency_id">
+        <option
+          ng-selected="{{ currency.name == 'USD' }}"
+          value="{{ currency.id }}"
+          ng-repeat="currency in currencies">{{ currency.name }}</option>
+    </select>
+</label>

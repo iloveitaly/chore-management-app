@@ -1,0 +1,51 @@
+<ion-view title="Settings">
+    <ion-content scroll="false" class="has-header">
+        <h4 class='padding-left'>{{ family.name }} Family</h4>
+
+        <!--
+        <form class="list" ng-submit="editFamily()">
+            <label class="item item-input" name="child_name">
+                <span class="input-label">Family Name</span>
+                <input type="text" ng-model="family.name">
+            </label>
+
+            <button class="button button-balanced button-block">Update</button>
+        </form>
+        -->
+
+            <!-- <button ui-sref="menu.addChild" class="button button-balanced button-full">Add Account</button> -->
+
+            <h4 class='padding-left padding-top'>Parents & Guardian</h4>
+
+            <ion-list>
+              <ion-item ng-repeat="parent in family.parents">
+                {{ parent.name }}
+                <span style="float: right">{{ parent.email }}</span>
+              </ion-item>
+            </ion-list>
+
+            <p class='padding'>
+              <a href="mailto:support@potential.family?subject=I'd%20like%20to%20invite%20a%20parent%20to%20my%20family&message=What's%20the%20email%20of%20who%20you%20would%20like%20to%20invite?">
+                Invite your spouse or other adult to your family
+              </a>
+            </p>
+
+            <!-- TODO invite additional parent  -->
+
+            <h4 class='padding-left padding-top'>Family View</h4>
+            <p class='padding-left' style="margin-bottom:0">Use the family view to let others in your family view their accounts.</p>
+
+            <div class="row">
+              <div class='col'>
+                <a ng-href="{{ familyViewUrl }}" target="_blank" class='button button-balanced button-block'>Open</a>
+              </div>
+              <div class='col'>
+                <a ng-href="mailto:?subject=Our%20family%20view&body={{ familyViewUrl }}" class='button button-positive button-block'>Share</a>
+              </div>
+            </div>
+
+            <p>&nbsp;</p>
+            <p style="text-align: center;">{{ appVersion }}</p>
+
+    </ion-content>
+</ion-view>

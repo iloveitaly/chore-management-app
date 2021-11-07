@@ -1,0 +1,60 @@
+<ion-view title="Edit Account">
+    <ion-content scroll="false" class="has-header padding">
+
+        <form style="margin-bottom: 0" class="list" ng-submit="editAccount()">
+            <label class="item item-input">
+                <span class="input-label">Account Name</span>
+                <input type="text" ng-model="account.name">
+            </label>
+
+            <div class="list">
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Child
+                    </div>
+                    <select
+                      ng-model="account.child_id"
+                      ng-options="child.id as child.name for child in children">
+                      <option value=""/>
+                    </select>
+                </label>
+            </div>
+
+            <!--  TODO DRY up from #create -->
+            <label class="item item-input item-stacked-label" ng-show="account.child_id == 'create'">
+              <div class="input-label">
+                  Child's Name
+              </div>
+              <input type="text" placeholder="" ng-model="child.name">
+            </label>
+
+            <label class="item item-input item-stacked-label" ng-show="account.child_id == 'create'">
+              <div class="input-label">
+                  Child's Email
+              </div>
+              <input type="text" placeholder="" ng-model="child.email">
+            </label>
+
+
+            <ion-toggle ng-model="account.interest_rate_enabled" toggle-class="">Interest Payments</ion-toggle>
+
+            <label class="item item-input" ng-show="account.interest_rate_enabled">
+              <span class="input-label">Monthly Interest Rate</span>
+              <input
+                type="text"
+                ng-model="account.interest_rate"
+                placeholder="Ex: 10%"
+                ui-percentage-mask="2"
+                min="0"
+                max="100" />
+            </label>
+
+            <p style="margin-top:10px">Interest is paid based on the balance of the account on first of the month.</p>
+
+            <button class="button button-balanced button-block">Update</button>
+        </form>
+
+        <button class="button button-assertive button-block" ng-click="deleteAccount()">Delete Account</button>
+
+    </ion-content>
+</ion-view>

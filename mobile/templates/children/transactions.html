@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-nav-title>{{ account.name }}. <span ng-bind-html="formatCurrency(account.balance, account)"></span></ion-nav-title>
+
+    <ion-content padding="false" class="has-header">
+
+      <ion-refresher pulling-text="Pull to refresh" on-refresh="pullToRefresh()">
+      </ion-refresher>
+
+      <ion-list>
+        <ion-item ng-repeat="transaction in transactions">
+          <b ng-bind-html="formatCurrency(transaction.amount, account)"></b>. {{transaction.description}}
+
+          <p>
+            {{transaction.amount > 0 ? 'Paid by' : 'For'}}
+            <b>{{ transaction.amount > 0 ? transaction.payor : transaction.payee }}</b>
+            on {{ transaction.created_at | date:'short' }}
+          </p>
+        </ion-item>
+      </ion-list>
+
+      <div ng-show="transactions.length == 0" class='text-center ng-hide' style="margin-top: 30%">
+        <h4>No Transactions</h4>
+        <!-- <p class='text-muted'>Add a transaction to represent money earned or spent.</p> -->
+      </div>
+    </ion-content>
+</ion-view>

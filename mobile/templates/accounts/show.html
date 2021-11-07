@@ -1,0 +1,39 @@
+<ion-view>
+  <ion-nav-title>{{ account.name }}. <span ng-bind-html="formatCurrency(account.balance, account)"></span></ion-nav-title>
+
+  <ion-nav-buttons class='header-item' side="right">
+    <button class="button button-icon button-clear ion-gear-a" ui-sref="menu.editAccount({ accountId: account.id })">
+    </button>
+  </ion-nav-buttons>
+
+    <ion-content padding="false" class="has-header has-footer">
+
+      <ion-refresher pulling-text="Pull to refresh" on-refresh="pullToRefresh()">
+      </ion-refresher>
+
+      <ion-list can-swipe="true">
+        <ion-item ng-repeat="transaction in transactions" ui-sref="menu.editTransaction({ transactionId: transaction.id })">
+          <b ng-bind-html="formatCurrency(transaction.amount, account)"></b>. {{transaction.description}}
+
+          <p>
+            {{transaction.amount > 0 ? 'Paid by' : 'For'}}
+            <b>{{ transaction.amount > 0 ? transaction.payor : transaction.payee }}</b>
+            on {{ transaction.created_at | date:'short' }}
+          </p>
+
+          <ion-option-button class="button-positive" ui-sref="menu.editTransaction({ transactionId: transaction.id })">
+            Edit
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+
+      <div ng-show="transactions.length == 0" class='text-center ng-hide' style="margin-top: 30%">
+        <h4>No Transactions</h4>
+        <p class='text-muted'>Add a transaction to represent money earned or spent.</p>
+      </div>
+    </ion-content>
+
+    <ion-footer-bar class="bar-balanced" ui-sref="menu.addTransaction({ accountId: account.id })">
+      <p class="title">Record Transaction<p>
+    </ion-footer-bar>
+</ion-view>

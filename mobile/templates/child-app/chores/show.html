@@ -1,0 +1,17 @@
+<ion-view>
+  <ion-nav-title>{{ chore.name }}</ion-nav-title>
+
+  <ion-content scroll="false" class="has-header padding">
+    <div class="card">
+      <div class="item item-text-wrap">
+        <h2>Instructions</h2>
+        <p>{{ chore.description }}</p>
+      </div>
+      <div class="item item-text-wrap">
+        <h2>Reward</h2>
+        <p>${{ chore.value }}, or possibly another reward in another currency.</p>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

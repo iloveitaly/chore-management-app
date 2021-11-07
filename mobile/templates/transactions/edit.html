@@ -1,0 +1,40 @@
+<ion-view>
+  <ion-nav-title>Edit</ion-nav-title>
+    <ion-content scroll="true" class="has-header padding">
+
+        <form class="list" ng-submit="editTransaction()">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label" ng-show="transaction.type == 'income'">How much was earned?</span>
+                <span class="input-label" ng-show="transaction.type == 'expense'">How much was spent?</span>
+                <input type="text" placeholder="Example: 10.50" ng-model="transaction.amount">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label" ng-show="transaction.type == 'income'">What was done?</span>
+              <span class="input-label" ng-show="transaction.type == 'expense'">What was purchased?</span>
+              <input type="text" placeholder="Example: {{ type == 'expense' ? 'New legos' : 'Mowed the lawn' }}" ng-model="transaction.description">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label" ng-show="transaction.type == 'expense'">Who's being paid?</span>
+              <input type="text" placeholder="Example: Toys R' Us" ng-show="transaction.type == 'expense'" ng-model="transaction.payee">
+
+              <span class="input-label" ng-show="transaction.type == 'income'">Who's paying?</span>
+              <input type="text" ng-show="transaction.type == 'income'" ng-model="transaction.payor">
+            </label>
+
+            <!--  TODO eliminate padding -->
+            <div class="row">
+              <div class='col'>
+                <button class="button button-balanced button-block">Update</button>
+              </div>
+              <div class='col'>
+                <!-- TODO cleanup account vs child reference once refactor is complete -->
+                <button class="button button-positive button-block" ui-sref="menu.showAccount({ accountId: transaction.account_id })">Cancel</button>
+              </div>
+            </div>
+
+            <!-- <p class='text-center'>Tips and tricks for managing family allowances!</p> -->
+        </form>
+    </ion-content>
+</ion-view>

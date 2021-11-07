@@ -1,0 +1,42 @@
+<ion-view title="Pay for Job">
+    <ion-content scroll="true" class="has-header padding">
+        <form class="list" ng-submit="pay()">
+            <label class="item item-input item-select">
+              <span class="input-label">Assign</span>
+              <select
+                ng-model="chore.child_id"
+                ng-options="child.id as child.name for child in children">
+                <option value="">-- Select Child --</option>
+              </select>
+
+              <!-- <p>The child you select will see this job on their account.</p> -->
+            </label>
+
+            <label class="item item-input item-select">
+              <span class="input-label">Account</span>
+              <select
+                ng-model="chore.account_id"
+                ng-options="account.id as account.name for account in child.accounts">
+                <option value="">-- Select --</option>
+              </select>
+            </label>
+
+            <label class="item item-input item-stacked-label item-text-wrap">
+              <span class="input-label" style="width: 100%">Payment Amount</span>
+              <input type="text" placeholder="10" ng-model="chore.value">
+
+              <p class=''>This amount will be paid in the currency of the account you specify.</p>
+              <!--  TODO currency description? -->
+            </label>
+
+            <div class="row">
+              <div class='col'>
+                <button class="button button-balanced button-block">Pay</button>
+              </div>
+              <div class='col'>
+                <button class="button button-positive button-block" ui-sref="menu.choresList">Cancel</button>
+              </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

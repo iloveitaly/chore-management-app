@@ -1,0 +1,87 @@
+<ion-view title="Edit Child">
+    <ion-content scroll="true" class="has-header padding">
+        <form class="list" ng-submit="editChild()">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Name</span>
+                <input type="text" placeholder="" ng-model="child.name">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="child@example.com" ng-model="child.email">
+            </label>
+
+            <ion-toggle ng-model="child.email_enabled" toggle-class="">Email Reports</ion-toggle>
+
+            <label class="item item-input item-select" ng-show="child.email_enabled">
+                <div class="input-label">
+                    Frequency
+                </div>
+
+                <select
+                  ng-model="child.email_frequency"
+                  ng-options="frequency[0] as frequency[1] for frequency in emailFrequencies">
+                </select>
+            </label>
+
+            <!--  monthly -->
+            <label class="item item-input item-select" ng-show="child.email_enabled && child.email_frequency == 'monthly'">
+                <div class="input-label">
+                    Day
+                </div>
+
+                <select
+                  ng-model="child.email_month_day"
+                  ng-options="day as day for day in emailMonthDays">
+                </select>
+            </label>
+
+            <!-- weekly -->
+            <label class="item item-input item-select" ng-show="child.email_enabled && child.email_frequency == 'weekly'">
+                <div class="input-label">
+                    Day
+                </div>
+
+                <select
+                  ng-model="child.email_week_day"
+                  ng-options="day[0] as day[1] for day in emailWeekDays">
+                </select>
+            </label>
+
+            <ion-toggle ng-show="child.accounts.length > 1" ng-model="child.split_earnings" toggle-class="">Split Earnings</ion-toggle>
+
+            <div ng-show="child.split_earnings">
+              <label ng-repeat="account in accountsForCurrency[child.default_currency_id] track by $index" class="item item-input">
+                <span class="input-label">{{ account.name }}</span>
+                <input
+                  type="text"
+                  ng-model="account.split_percentage"
+                  ui-percentage-mask="0"
+                  ui-percentage-value
+                  min="0"
+                  max="100" />
+              </label>
+
+              <!-- <p>Specify how you would like to split earnings for this child across this account.
+                For instance, you could split any payment over a spending, saving, and tithe account.</p> -->
+            </div>
+
+            <div class='row' ng-show="child.has_user_account">This child has a logged in to the app and can view their accounts and jobs.</div>
+
+            <div class="row">
+              <div class='col'>
+                <button class="button button-balanced button-block">Update</button>
+              </div>
+              <div class='col'>
+                <button class="button button-positive button-block" ui-sref="menu.childenIndex">Cancel</button>
+              </div>
+            </div>
+
+            <p class='padding'>
+              <a href="mailto:support@potential.family?subject=Your%20accounts&body={{ childViewUrl | escape }}">
+                Share a link to a read-only view of this child's accounts.
+              </a>
+            </p>
+        </form>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,53 @@
+<ion-view title="Edit Job">
+    <ion-content scroll="false" class="has-header padding">
+
+        <div ng-if="createdFromRecurringChore" class="card">
+          <div class="item item-text-wrap">
+            The job you just paid was a recurring job. A copy of this job was automatically created.
+            Edit the job details below, or just press update.
+          </div>
+        </div>
+
+        <form class="list" ng-submit="editChore()">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">What is the name of the job?</span>
+            <input type="text" placeholder="Clean the dishes" ng-model="chore.name">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">What is the value of the job?</span>
+            <input type="text" placeholder="10" ng-model="chore.value">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">What needs to be done?</span>
+            <textarea placeholder="Clean all of the dishes and cups" ng-model="chore.description">
+            </textarea>
+          </label>
+
+          <ion-toggle ng-model="chore.recurring" toggle-class="">Recurring</ion-toggle>
+
+          <label class="item item-input item-select item-stacked-label">
+            <span class="input-label">Assign</span>
+            <select
+              ng-model="chore.child_id"
+              ng-options="child.id as child.name for child in children">
+              <option value="">-- Select Child --</option>
+            </select>
+
+            <!-- <p>The child you select will see this job on their account.</p> -->
+          </label>
+
+          <div class="row">
+            <div class='col'>
+              <button class="button button-balanced button-block">Update</button>
+            </div>
+            <div class='col'>
+              <button class="button button-positive button-block" ui-sref="menu.choresList">Cancel</button>
+            </div>
+          </div>
+        </form>
+
+        <button class="button button-assertive button-block" ng-click="deleteChore()">Delete Job</button>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,87 @@
+<ion-view title="Setup Your Family">
+    <ion-nav-title>Tell us about {{ child.name }}</ion-nav-title>
+    <ion-content scroll="true" class="has-header padding">
+        <form ng-submit="setupChild()">
+          <!--
+          <label class="item item-input item-select item-stacked-label">
+            <div class="input-label">
+                What age range is {{ child.name }}
+            </div>
+
+            <select>
+              <option>Under 6</option>
+              <option>7-10</option>
+              <option>11-15</option>
+              <option>15+</option>
+            </select>
+
+            <p class='text-muted'>This helps us tailor their setup!</p>
+          </label>
+          -->
+
+          <!-- <label class="item item-input item-stacked-label">
+            Would you like {{ child.name }} to have
+          </label> -->
+
+          <!--
+          <div class="item item-divider">
+            Would you like {{ child.name }} to have
+          </div>
+
+          <ion-list>
+            <ion-radio ng-model="choice" ng-value="'A'">Spending Account</ion-radio>
+            <ion-radio ng-model="choice" ng-value="'B'">Spending and Saving</ion-radio>
+            <ion-radio ng-model="choice" ng-value="'B'">Spending, Saving, and Giving</ion-radio>
+            <p class='text-muted'>You can always add more accounts later.</p>
+          </ion-list>
+          -->
+
+          <label class="item item-select item-stacked-label item-text-wrap">
+            <div class="input-label">
+                How would you like to reward {{ child.name }}?
+            </div>
+
+            <select ng-model="setup.currency_id">
+                <option
+                  ng-selected="{{ currency.name == 'USD' }}"
+                  value="{{ currency.id }}"
+                  ng-repeat="currency in currencies">{{ currency.name }}</option>
+            </select>
+
+            <p class='text-muted'>{{ child.name }}'s accounts will use this currency.</p>
+
+            <!--  TODO improve currency select wording -->
+          </label>
+
+            <label class="item item-input item-stacked-label">
+              <div class="input-label">
+                  What has {{ child.name }} already earned?
+              </div>
+
+              <input
+                type="text"
+                placeholder="What has your child already earned?"
+                ng-model="setup.balance" />
+            </label>
+
+            <label class="item item-input item-stacked-label item-text-wrap">
+              <div class="input-label">
+                Enter {{ child.name }}'s email (optional)
+              </div>
+
+              <input
+                type="text"
+                placeholder="child@example.com"
+                ng-model="setup.email" />
+
+              <p style="word">Enter {{ child.name }}'s email if you would like {{ child.name }} to receive notifications
+                 and have the ability to login.</p>
+            </label>
+
+
+            <button class="button button-balanced button-block">Next</button>
+        </form>
+
+        <a href="#" ng-click="setupChild()">Skip setting up this child</a>
+    </ion-content>
+</ion-view>

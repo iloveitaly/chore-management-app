@@ -1,0 +1,68 @@
+<ion-view>
+  <ion-nav-title>{{ child.name }}</ion-nav-title>
+
+    <ion-content padding="false" class="has-header">
+      <div class="list card">
+        <div class="item item-divider">
+          Balance Across Accounts
+        </div>
+        <div ng-if="child.count_of_accounts == 0" class="item item-text-wrap">
+          This child does not have any accounts.
+        </div>
+
+        <div class="item" ng-repeat="currencyBalance in child.balance_by_currency">
+          <span ng-bind-html="formatCurrency(currencyBalance.balance, currencyBalance)">
+        </div>
+      </div>
+
+      <div class="list card">
+        <div class="item item-divider">
+          Accounts
+        </div>
+
+        <a ui-sref="menu.showAccount({ accountId: account.id })" class="item" ng-repeat="account in child.accounts">
+          {{ account.name }}. <span ng-bind-html="formatCurrency(account.balance, account)">
+        </a>
+
+        <a ui-sref="menu.addAccount" class="item">
+          <i class='fa fa-plus'></i>&nbsp;&nbsp;&nbsp;Add Account
+        </a>
+      </div>
+
+      <div class="list card">
+        <div class="item item-divider">
+          Jobs
+        </div>
+
+        <a ui-sref="menu.editChore({ choreId: chore.id })" class="item" ng-repeat="chore in child.chores | filter:{'status':'!paid'}">
+          {{ chore.name }}
+        </a>
+
+        <a ui-sref="menu.addChore" class="item">
+          <i class='fa fa-plus'></i>&nbsp;&nbsp;&nbsp;Add Job
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="item item-divider">
+          Child Account Access
+        </div>
+
+        <div class="item item-text-wrap" ng-show="child.has_user_account">
+          <p>This child can login and view their accounts and jobs.</p>
+        </div>
+
+        <div class="item item-text-wrap" ng-show="!child.has_user_account">
+          <p>This child cannot login to their account. <a ui-sref="menu.editChild({ childId: child.id })">Link their email</a> to give them access</p>
+        </div>
+        <div class="item item-text-wrap" ng-show="!child.has_user_account">
+          <p>
+            <a href="mailto:support@potential.family?subject=Your%20accounts&body={{ childViewUrl | escape }}">
+            Share a link to a read-only view of this child's accounts.
+            </a>
+          </p>
+        </div>
+      </div>
+
+    </ion-content>
+</ion-view>

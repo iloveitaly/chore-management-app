@@ -1,0 +1,74 @@
+#!/bin/bash
+
+cd `dirname $0`
+cd ..
+
+cd web
+
+echo $'\nBundling...'
+
+bundle
+
+# http://sterling.ghost.io/upgrading-to-yosemite-with-a-rails-environment/
+if ! bundle show pg; then
+  gem install --install-dir vendor/bundle pg -v 0.18.4 -- \
+    --with-pg-config=/Applications/Postgres.app/Contents/Versions/9.4/bin/pg_config
+fi
+
+echo $'\nBundling again after running workarounds'
+
+if ! bundle; then
+	echo $'\nUnhandled error when running bundler. Time for some manual debugging...'
+	exit 1
+fi
+
+# test if heroku is configured for the app
+if ! heroku config 2>&1 > /dev/null; then
+	echo $'\nHeroku is not configured. Configuring Heroku...'
+
+	# NOTE heroku app name hardcoded here
+	if ! heroku git:remote -a family-currency; then
+		echo $'\nError configuring Heroku...'
+		exit 1
+	fi
+fi
+
+
+bundle exec rake db:reset
+bundle exec rake db:reset RAILS_ENV=test
+
+# system! 'bin/rails db:setup'
+# system! 'bin/rails log:clear tmp:clear'
+# system! 'bin/rails restart'
+
+if [[ ! -e ~/.pow/family-currency ]]; then
+  echo $'\nLinking application to pow...'
+  ln -s $PWD ~/.pow/family-currency
+fi
+
+# ln -s /Users/Mike/Desktop/family-currency/www/ /Users/Mike/Desktop/family-currency/web/public/app
+
+# == PARENT SETUP ==
+
+# TODO npm ionic cordova install
+npm install
+npm update -g bower
+npm install -g cordova
+sudo npm cache clear
+
+ionic plugin add cordova-plugin-inappbrowser
+ionic upload
+
+rm -R web/public/app && ln -s $PWD/www web/public/app
+
+(rm web/public/app || rm -Rf web/public/app) && cp -R ./www/ ./web/public/app
+g add -A web/public/app/
+g commit -m "Updating public app"
+
+git push heroku `git subtree split --prefix web master`:master --force
+
+heroku pg:reset DATABASE_URL
+heroku run rake db:migrate
+
+# clear out all of the build dirs
+rm www/dist/* web/public/app/dist/*

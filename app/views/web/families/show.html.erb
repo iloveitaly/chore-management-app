@@ -1,0 +1,244 @@
+<script type="text/javascript">
+  angular.module('app', [
+
+  ])
+
+  .run(function() {
+
+  })
+
+  .config(function($provide) {
+    // http://stackoverflow.com/questions/17441254/why-angularjs-currency-filter-formats-negative-numbers-with-parenthesis/30122327#30122327
+    $provide.decorator('$locale', ['$delegate', function($delegate) {
+       if($delegate.id == 'en-us') {
+         $delegate.NUMBER_FORMATS.PATTERNS[1].negPre = '';
+         $delegate.NUMBER_FORMATS.PATTERNS[1].negSuf = '';
+       }
+       return $delegate;
+     }]);
+  })
+
+  .controller('familyController', function($scope, $locale, $sce, $filter) {
+    $scope.accounts = <%== ActiveModel::Serializer::Adapter.create(ActiveModel::Serializer::ArraySerializer.new(
+      @family.accounts,
+      serializer: AccountSerializer,
+    ))
+    .to_json
+    %>
+
+    $scope.all_transactions = <%==
+      @family.accounts.inject({}) do |h, account|
+        h[account.id] = ActiveModel::Serializer::Adapter.create(ActiveModel::Serializer::ArraySerializer.new(
+          account.transactions,
+          serializer: TransactionSerializer
+        ))
+
+        h
+      end.to_json
+    %>
+
+    $scope.currencies = <%==
+      ActiveModel::Serializer::Adapter.create(ActiveModel::Serializer::ArraySerializer.new(
+        Currency.all,
+        serializer: CurrencySerializer
+      )).to_json
+    %>
+
+    $scope.formatCurrency = function(amount) {
+      var formats = $locale.NUMBER_FORMATS;
+      var currency = _.find($scope.currencies, function(currency) { return currency.id == $scope.account.currency_id })
+
+      var fractionSize = currency.zeroDecimal ? 0 : 2;
+
+      if(fractionSize > 0) {
+        amount /= 100
+      }
+
+      return $sce.trustAsHtml(
+        (amount < 0 ? '-' : '') +
+        (currency.icon.startsWith('ion-') ? "<i class='" + currency.icon + "'></i> " : currency.icon) +
+        $filter('currency')(amount, '', fractionSize)
+      );
+    }
+
+    $scope.switchAccount = function(accountId) {
+      $scope.account = _.find($scope.accounts, function(account) { return account.id == accountId});
+      $scope.transactions = $scope.all_transactions[accountId];
+    }
+
+    $scope.switchAccount($scope.accounts[0].id)
+  })
+</script>
+
+<style media="screen">
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #f2f2f2;
+    border-right: 1px solid #e6e6e6;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 249px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #4c4c4c;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #262626;
+    font-weight: bold;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #262626;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+</style>
+
+<div id="wrapper" ng-controller="familyController">
+
+  <!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            <a href="#">
+                <%= @family.name %>
+            </a>
+        </li>
+        <li ng-repeat="account in accounts">
+            <a href="#" ng-click="switchAccount(account.id)">{{ account.name }}</a>
+        </li>
+    </ul>
+</div>
+
+<!-- /#sidebar-wrapper -->
+<div id="page-content-wrapper">
+  <div class='container-fluid'>
+    <div class='row'>
+      <div class='col-lg-12'>
+
+        <h3>{{ account.name }}</h3>
+        <h5 ng-bind-html="formatCurrency(account.balance)"></h5>
+
+        <p>&nbsp;</p>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Payee/Payor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="transaction in transactions">
+              <td ng-bind-html="formatCurrency(transaction.amount)">Mark</td>
+              <td>{{ transaction.description }}</td>
+              <td>{{ transaction.created_at | date:'short' }}</td>
+              <td>{{ transaction.amount > 0 ? transaction.payor : transaction.payee }}</td>
+            </tr>
+          </tbody>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

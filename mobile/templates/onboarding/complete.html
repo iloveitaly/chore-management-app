@@ -1,0 +1,87 @@
+<ion-view hide-nav-bar="true">
+     <!-- class="has-header padding" -->
+    <ion-content scroll="false" style="background-image: radial-gradient(circle farthest-side at right bottom, #4DC2F8, #24A9F0 80%, #1498e6);">
+      <ion-slides slider="data.slider" class='onboard-slides'>
+        <ion-slide-page>
+
+          <div class="padding text-center">
+            <i class='fa fa-users'></i>
+            <h1>Congratulations!</h1>
+            <p>You're all set.</p>
+            <p>Here’s how to get started.</p>
+
+            <button ng-click="nextSlide()" class='button button-light'>Let's Go!</button>
+          </div>
+
+        </ion-slide-page>
+
+        <ion-slide-page>
+
+          <div class="col col-top padding text-center">
+            <i class='fa fa-child'></i>
+            <h1>Loop In Your Family</h1>
+
+            <p>Invite your better half to join you and have your children check their email for a link to login to their Child Account</p>
+
+            <button ng-click="nextSlide()" class='button button-light'>Okay!</button>
+          </div>
+
+        </ion-slide-page>
+
+        <ion-slide-page>
+
+          <div class="col col-top padding text-center">
+            <i class='fa fa-wrench'></i>
+            <h1>Add Some Jobs</h1>
+
+            <p>Help your child start earning by assigning a task or two in the Jobs area</p>
+
+            <button ng-click="nextSlide();" class='button button-light'>Got it!</button>
+          </div>
+
+        </ion-slide-page>
+
+        <ion-slide-page>
+
+          <div class="col col-top padding text-center">
+            <i class='fa fa-money'></i>
+
+            <h1>Reward Your Children</h1>
+
+            <p>When they finish a job, add a reward to your child’s account.
+              When they make a purchase, create an expense in their account. </p>
+
+            <button ng-click="nextSlide();" class='button button-light'>Got it!</button>
+          </div>
+
+        </ion-slide-page>
+
+        <ion-slide-page>
+
+          <div class="col col-top padding text-center">
+            <i class='fa fa-shopping-cart'></i>
+
+            <h1>Track Expenses</h1>
+
+            <p>When they want something, have them check their balance - if they get it, expense it!</p>
+
+            <button ng-click="nextSlide();" class='button button-light'>Got it!</button>
+          </div>
+
+        </ion-slide-page>
+
+        <ion-slide-page>
+
+          <div class="col col-top padding text-center">
+            <h1>Rinse and Repeat</h1>
+
+            <p>Add jobs, reward your children for jobs well done, and let them spend their earnings wisely!</p>
+
+            <button ui-sref="menu.accountsList" class='button button-light'>Go To My Account</button>
+          </div>
+
+        </ion-slide-page>
+      </ion-slides>
+
+  </ion-content>
+</ion-view>

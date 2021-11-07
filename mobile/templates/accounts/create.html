@@ -1,0 +1,59 @@
+<ion-view title="Add an Account">
+    <ion-content scroll="true" class="has-header padding">
+        <div>
+            <p>Each account you create starts with a zero balance. You can create one account per-child, or multiple accounts per-account (for instance, if you want to have a separate savings account). You can add more accounts later.</p>
+        </div>
+
+        <form ng-submit="addAccount()">
+            <label class="item item-input">
+              <div class="input-label item-stacked-label">
+                  Name
+              </div>
+
+              <input type="text" placeholder="Joe's Savings Account" ng-model="account.name">
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Child
+                </div>
+
+                <select
+                  ng-model="account.child_id"
+                  ng-options="c.id as c.name for c in children">
+                  <option value=""/>
+                </select>
+            </label>
+
+            <label class="item item-input item-stacked-label" ng-show="account.child_id == 'create'">
+              <div class="input-label">
+                  Child's Name
+              </div>
+              <input type="text" placeholder="" ng-model="child.name">
+            </label>
+
+            <label class="item item-input item-stacked-label" ng-show="account.child_id == 'create'">
+              <div class="input-label">
+                  Child's Email
+              </div>
+              <input type="text" placeholder="" ng-model="child.email">
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Currency
+                </div>
+                <select ng-model="account.currency_id">
+                    <option
+                      ng-selected="{{ currency.name == 'USD' }}"
+                      value="{{ currency.id }}"
+                      ng-repeat="currency in currencies">{{ currency.name }}</option>
+                </select>
+            </label>
+
+            <button class="button button-balanced button-block ">Submit</button>
+        </form>
+
+        <!--  TODO learn more about how virtual banking works! -->
+    </ion-content>
+</ion-view>

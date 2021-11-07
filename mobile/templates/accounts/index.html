@@ -1,0 +1,48 @@
+<ion-view>
+  <ion-nav-title>{{ family.name }} Family Accounts</ion-nav-title>
+
+  <ion-nav-buttons class='header-item' side="right">
+    <button class="button" ng-show="account.length > 1" ng-click="data.showReorder = !data.showReorder">
+      {{ data.showReorder ? 'Done' : 'Edit' }}
+    </button>
+  </ion-nav-buttons>
+
+    <ion-content padding="false" class="has-header has-footer">
+      <ion-refresher
+        ng-if="!data.showReorder"
+        pulling-text="Pull to refresh"
+        on-refresh="doRefresh()">
+      </ion-refresher>
+
+        <ion-list show-reorder="data.showReorder">
+            <!-- TODO consider collection-repeat for performance  -->
+            <!-- TODO use `item-button-right` for icon on right side -->
+            <ion-item ng-repeat="account in accounts">
+              <div ui-sref="menu.showAccount({ accountId: account.id })">
+                {{ account.name }}. <b>Balance: </b><span ng-bind-html="formatCurrency(account.balance, account)"></span>
+                <p>Last updated: {{ account.updated_at | date:'short'}}</p>
+              </div>
+
+              <ion-reorder-button
+                class="ion-navicon"
+                on-reorder="reorderItem(account, $index, $fromIndex, $toIndex)">
+              </ion-reorder-button>
+
+              <!--
+              <button class="button button-clear" ui-sref="menu.addTransaction({ accountId: account.id })">
+                <i class="icon ion-ios-plus"></i>
+              </button>
+              -->
+            </ion-item>
+        </ion-list>
+
+        <div ng-show="accounts.length == 0" class='text-center ng-hide' style="margin-top: 30%">
+          <h4>No Accounts</h4>
+          <p class='text-muted'>Add one or more account for each child in your family.</p>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar class="bar-balanced" ui-sref="menu.addAccount">
+      <p class="title">Add Account<p>
+    </ion-footer-bar>
+</ion-view>
