@@ -1,22 +1,13 @@
-You'll have to create an account with Apple and then build.phongap.com (the first is paying, not the second) to generate the file you can actually upload to iTunes. As a warning, Apple makes the process as painful and annoying as it can be... Not much we can do about that... Here is where to start https://developer.apple.com/.
+# Family Chore Management App
 
-http://family-currency.herokuapp.com/
+This is the source code from an old startup I worked on that failed. The idea was to create a mobile app that parents and kids could use to manage family chores. The unique idea was parents could create multiple types of currencies to track and 'pay' children in (like screentime).
 
-http://staging-family-currency.herokuapp.com
+It never took off. Posting the source here in case it's useful to anyone. It's a rails app with a ionic-based mobile app. It's pretty old source code (~2015).
 
-git push heroku `git subtree split --prefix web master`:master --force
+Some unedited notes included below.
 
-https://console.developers.google.com/apis/credentials?project=family-currency
+---
 
-https://blog.bubble.is
-
-https://itunes.apple.com/gy/app/bubble-account/id976171065?mt=8
-
-http://forum.bubble.is/t/native-mobile-app/191/3
-
-http://app.phonegap.com
-
-support@bubble.is
 
 when setting up google credentials, from omniauth:
 
